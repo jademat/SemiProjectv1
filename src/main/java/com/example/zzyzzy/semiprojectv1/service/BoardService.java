@@ -7,5 +7,5 @@ import java.util.List;
 public interface BoardService {
 
     List<BoardDTO> readBoard(int cpg);
-
+    int countBoard();
 }
