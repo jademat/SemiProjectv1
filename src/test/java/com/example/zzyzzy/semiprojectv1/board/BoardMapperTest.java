@@ -71,4 +71,25 @@ public class BoardMapperTest {
 
     }
 
+    @Test
+    @DisplayName("BoardMapper countfind test")
+    void countfindTest() {
+        // Given : 데스트에 사용할 데이터 제공
+        Map<String,Object> params = new HashMap<>();
+        params.put("pageSize",35);
+        params.put("findtype","userid");
+        params.put("findkey","abc");
+
+        // When : 데이터로 테스트할 기능 호출
+        // HashMap 형태로 검색관련 데이터 넘김
+        int results = boardMapper.countFindBoard(params);
+
+        // Then : 호출되고 난 후 결과값 확인
+        log.info("results : {}", results);
+        assertThat(results).isGreaterThan(0); // 결과 갯수 확인
+
+
+    }
+
+
 }

@@ -32,6 +32,10 @@ public class BoardController {
     public String find(Model m,String findtype, String findkey,
                        @RequestParam(defaultValue = "1") int cpg) {
 
+        m.addAttribute("bds", boardService.findBoard(cpg,findtype,findkey));
+        m.addAttribute("cpg", cpg);
+        m.addAttribute("stblk", ((cpg -1) /10)*10 +1);
+        m.addAttribute("cntpg", boardService.countFindBoard(findtype,findkey));
 
         return "views/board/list";
     }
