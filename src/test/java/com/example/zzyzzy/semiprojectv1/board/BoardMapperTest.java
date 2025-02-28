@@ -91,5 +91,20 @@ public class BoardMapperTest {
 
     }
 
+    @Test
+    @DisplayName("BoardMapper selectOne test")
+    void selectOneTest() {
+        // Given : 데스트에 사용할 데이터 제공
+        int bno = 3000;
 
+        // When : 데이터로 테스트할 기능 호출
+        // HashMap 형태로 검색관련 데이터 넘김
+        Board result = boardMapper.selectOneBoard(bno);
+
+        // Then : 호출되고 난 후 결과값 확인
+        log.info("result : {}", result);
+        assertNotNull(result);
+        assertThat(result.getUserid()).isNotNull();
+
+    }
 }

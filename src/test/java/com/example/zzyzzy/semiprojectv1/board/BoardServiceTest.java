@@ -1,5 +1,6 @@
 package com.example.zzyzzy.semiprojectv1.board;
 
+import com.example.zzyzzy.semiprojectv1.domain.Board;
 import com.example.zzyzzy.semiprojectv1.domain.BoardDTO;
 import com.example.zzyzzy.semiprojectv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,22 @@ public class BoardServiceTest {
         // Then
 
         assertThat(results).isGreaterThan(0); // 결과 갯수 확인
+    }
+
+    @Test
+    @DisplayName("boardService readone test")
+    public void readOneTest() {
+        // Given
+        int bno = 3000;
+
+        // When
+
+        Board result = boardService.readOneBoard(bno);
+
+        // Then
+
+        assertThat(result).isNotNull(); // 결과 갯수 확인
+        assertThat(result.getUserid()).isNotNull();
     }
 
 }
