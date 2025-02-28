@@ -4,7 +4,9 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <th:block layout:fragment="content">
-    <main id="content">
+    <main id="content"
+        th:with="pglink=${(#strings.isEmpty(param.findkey)) ?
+                    '/board/list?cpg=' : '/board/find?findtype=' +param.findtype + '&findkey=' +param.findkey + '&cpg='}">
         <h2>게시판</h2>
         <table class="table table-striped" >
             <colgroup>
@@ -25,7 +27,7 @@
                             <option value="userid">작성자</option>
                             <option value="contents">내용</option>
                         </select>
-                        <input class="form-control" style="width: 250px" id = "findkey" name = "findkey">
+                        <input class="form-control" style="width: 250px" id = "findkey" name = "findkey" th:value="${param.findkey}">
                         <button class="btn btn-success" id = "findbtn"><i class="fa-solid fa-magnifying-glass"></i> 검색</button>
                     </div>
                 </td>
@@ -56,28 +58,29 @@
                 <tr>
                     <td colspan="6">
                         <ul class="pagination">
-                            <li class= "page-item">
-                                <a href = "/board/list?cpg=1" class="page-link">처음</a>
-                            </li>
+
                             <!-- 현재 페이지가 1/10 보다 '이전' 링크을 표시 -->
+                            <li class= "page-item">
+                                <a th:href = "|${pglink}1|" class="page-link">처음</a>
+                            </li>
                             <li class = "page-item" th:if="${cpg gt 10}">
-                                <a th:href = "|/board/list?cpg=${cpg - 1}|" class="page-link">이전</a>
+                                <a th:href = "|${pglink}${cpg - 1}|" class="page-link">이전</a>
                             </li>
                             <th:block th:each="i : ${#numbers.sequence(stblk,stblk + 9)}">
                                 <!-- 출력하는 페이지가 총페이지 수 이하일때 출력 -->
                                 <th:block th:if = "${i le cntpg}">
                                 <!-- i 와 cpg 가 일치하면 active 출력-->
                                 <li  th:class = "${(i ne cpg) ? 'page-item' : 'page-item active'}" >
-                                    <a th:href = "|/board/list?cpg=${i}|"
+                                    <a th:href = "|${pglink}${i}|"
                                         class="page-link" th:text="${i}"></a>
                                 </li>
                                 </th:block>
                             </th:block>
                             <li class = "page-item" th:if = "${cpg lt cntpg}">
-                                <a th:href = "|/board/list?cpg=${cpg + 1}|" class="page-link">다음</a>
+                                <a th:href = "|${pglink}${cpg + 1}|" class="page-link">다음</a>
                             </li>
                             <li class= "page-item" th:if = "${cpg lt cntpg}">
-                                <a th:href = "|/board/list?cpg=${cntpg}|" class="page-link">끝</a>
+                                <a th:href = "|${pglink}${cntpg}|" class="page-link">끝</a>
                             </li>
                         </ul>
                     </td>
